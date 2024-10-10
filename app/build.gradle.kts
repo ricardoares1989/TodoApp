@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
-    //TODO 1.6: Add the Compose plugin
 }
 
 android {
@@ -31,13 +30,12 @@ android {
         }
     }
     compileOptions {
-        //TODO: 1.5: Set JVM target to 17
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    //TODO 1.3: Remover compilador de compose
+
     kotlinOptions {
-        //TODO: 1.4: Set JVM target to 17
+
         jvmTarget = "17"
     }
 
@@ -62,5 +60,4 @@ dependencies {
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-    //TODO 1.1: REmover dependencias que no usaremos
 }
