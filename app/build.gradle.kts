@@ -2,6 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
+}
+room {
+    schemaDirectory("$projectDir/schemas")
 }
 
 android {
@@ -34,6 +39,7 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
+
     kotlinOptions {
 
         jvmTarget = "17"
@@ -60,4 +66,8 @@ dependencies {
     implementation(libs.androidx.material3)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+
 }
