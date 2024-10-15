@@ -21,8 +21,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             TodoAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HelloWorld(modifier = Modifier.fillMaxSize()
-                        .padding(innerPadding))
+                    HelloWorld(
+                        modifier = Modifier.fillMaxSize()
+                            .padding(innerPadding)
+                    )
                 }
             }
         }
