@@ -41,20 +41,20 @@ class MainActivity : ComponentActivity() {
                     launch {
                         fakeDatasource.addTask(
                             Task(
-                                id = 1,
+                                id = "1",
                                 title = "Task 1",
                                 description = "Description 1"
                             )
                         )
                         fakeDatasource.addTask(
                             Task(
-                                id = 2,
+                                id = "2",
                                 title = "Task 2",
                                 description = "Description 2"
                             )
                         )
 
-                        fakeDatasource.getTaskById(1)?.let {
+                        fakeDatasource.getTaskById("1")?.let {
                             val updatedTask = it.copy(title = "Updated Task 1")
                             fakeDatasource.updateTask(updatedTask)
                         }
