@@ -1,0 +1,61 @@
+package com.juandgaines.todoapp.presentation.screens.home
+
+import android.content.res.Configuration
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.juandgaines.todoapp.ui.theme.TodoAppTheme
+
+@Composable
+fun SummaryInfo(
+    modifier: Modifier,
+) {
+    Column (
+        modifier = modifier
+            .background(
+                color= MaterialTheme.colorScheme.secondaryContainer,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .padding(16.dp)
+    ){
+        Text(
+            text = "March 9, 2024",
+            style = MaterialTheme.typography.headlineLarge,
+            color = MaterialTheme.colorScheme.onSecondaryContainer,
+        )
+
+        Text(
+            text = "5 incomplete, 5 completed",
+            style = MaterialTheme.typography.titleSmall,
+            color = MaterialTheme.colorScheme.secondary,
+        )
+    }
+}
+@Composable
+@Preview(
+    showBackground = true,
+)
+fun SummaryInfoPreviewLight() {
+    TodoAppTheme {
+        SummaryInfo(modifier = Modifier)
+    }
+}
+
+@Composable
+@Preview(
+    showBackground = true,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+)
+fun SummaryInfoPreviewDark() {
+    TodoAppTheme {
+        SummaryInfo(modifier = Modifier)
+    }
+}
+
