@@ -27,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.juandgaines.todoapp.R
@@ -157,9 +159,11 @@ private fun IconButtonTemplatePreview(){
 }
 
 @Composable
-private fun OverflowTextExample() {
+private fun OverflowTextExample(
+    text: String
+) {
     Text(
-        text = "This is a very long text that might not fit in one line.",
+        text = text,
         maxLines = 1, // Limits the text to a single line
         overflow = TextOverflow.Ellipsis, // Displays '...' when the text is too long
         modifier = Modifier
@@ -171,8 +175,18 @@ private fun OverflowTextExample() {
 
 @Preview
 @Composable
-private fun OverflowTextTemplatePreview(){
+private fun OverflowTextTemplatePreview(
+    @PreviewParameter(TextProvider::class) text: String
+){
     TodoAppTheme {
-        OverflowTextExample()
+        OverflowTextExample(text)
     }
+}
+
+private class TextProvider:PreviewParameterProvider<String>{
+    override val values: Sequence<String>
+        get() = listOf(
+            "Hello, Parameter Provider!",
+            "This is a very long text that might not fit in one line."
+        ).asSequence()
 }
