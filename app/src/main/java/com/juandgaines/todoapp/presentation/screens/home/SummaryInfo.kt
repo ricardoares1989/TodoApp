@@ -16,6 +16,8 @@ import com.juandgaines.todoapp.ui.theme.TodoAppTheme
 @Composable
 fun SummaryInfo(
     modifier: Modifier,
+    date: String = "March 9, 2024",
+    tasksSummary: String = "5 incomplete, 5 completed"
 ) {
     Column (
         modifier = modifier
@@ -26,18 +28,19 @@ fun SummaryInfo(
             .padding(16.dp)
     ){
         Text(
-            text = "March 9, 2024",
+            text = date,
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.onSecondaryContainer,
         )
 
         Text(
-            text = "5 incomplete, 5 completed",
+            text = tasksSummary,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.secondary,
         )
     }
 }
+
 @Composable
 @Preview(
     showBackground = true,
