@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juandgaines.todoapp.ui.theme.TodoAppTheme
@@ -21,22 +22,19 @@ fun SummaryInfo(
 ) {
     Column (
         modifier = modifier
-            .background(
-                color= MaterialTheme.colorScheme.secondaryContainer,
-                shape = RoundedCornerShape(8.dp)
-            )
             .padding(16.dp)
     ){
         Text(
             text = date,
             style = MaterialTheme.typography.headlineLarge,
-            color = MaterialTheme.colorScheme.onSecondaryContainer,
+            color = MaterialTheme.colorScheme.onBackground,
+            fontWeight = FontWeight.Bold
         )
 
         Text(
             text = tasksSummary,
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.secondary,
+            color = MaterialTheme.colorScheme.onSurface,
         )
     }
 }
