@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
                                 task = Task(
                                     id = "1",
                                     title = "Task 1",
-                                    isCompleted = true,
+                                    isCompleted = false,
                                     description = "Description 1",
                                 )
                             )
@@ -64,7 +64,7 @@ class MainActivity : ComponentActivity() {
                                 task = Task(
                                     id = "1",
                                     title = "Task 1",
-                                    isCompleted = true,
+                                    isCompleted = false,
                                     description = "Description 1",
                                 )
                             )
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
                                 task = Task(
                                     id = "1",
                                     title = "Task 1",
-                                    isCompleted = false,
+                                    isCompleted = true,
                                     description = "Description 1",
                                 )
                             )
