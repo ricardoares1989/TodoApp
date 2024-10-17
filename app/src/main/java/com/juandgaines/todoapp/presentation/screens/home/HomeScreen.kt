@@ -36,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.juandgaines.todoapp.R
 import com.juandgaines.todoapp.presentation.screens.home.components.SectionTitle
 import com.juandgaines.todoapp.presentation.screens.home.components.SummaryInfo
@@ -47,11 +48,12 @@ import com.juandgaines.todoapp.ui.theme.TodoAppTheme
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    state: HomeDataState
+    //state: HomeDataState
 ) {
-
     var isMenuExtended by remember { mutableStateOf(false) }
 
+    val viewModel:HomeScreenViewModel = viewModel<HomeScreenViewModel>()
+    val state = viewModel.state
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -88,7 +90,6 @@ fun HomeScreen(
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 },
-
                                 onClick = {}
                             )
                         }
@@ -109,7 +110,39 @@ fun HomeScreen(
                 item {
                     SummaryInfo(
                         date = state.date,
-                        tasksSummary = state.summary
+                        tasksSummary = state.summary,
+                        completedTasks = state.completedTask.size,
+                        totalTask = state.completedTask.size + state.pendingTask.size
+                    )
+                }
+
+                stickyHeader{
+                    SectionTitle(
+                        modifier = Modifier.background(
+                            color = MaterialTheme.colorScheme.surface
+                        ).fillParentMaxWidth(),
+                        title = stringResource(R.string.pending_tasks)
+                    )
+                }
+
+                items(
+                    items = state.pendingTask,
+                    key = { task -> task.id }
+                ){ task ->
+                    TaskItem(
+                        modifier = Modifier
+                            .clip(
+                                RoundedCornerShape(8.dp)
+                            )
+                            .animateItem(),
+                        task = task,
+                        onClickItem = { },
+                        onDeleteItem = {
+                            viewModel.onAction(HomeScreenAction.OnDeleteTask(task))
+                        },
+                        onToggleCompletion = {
+                            viewModel.onAction(HomeScreenAction.OnToggleTask(it))
+                        }
                     )
                 }
 
@@ -135,37 +168,19 @@ fun HomeScreen(
                             )
                             .animateItem(),
                         task = task,
-                        onClickItem = { },
-                        onDeleteItem = { },
-                        onToggleCompletion = {}
+                        onClickItem = {
+
+                        },
+                        onDeleteItem = {
+                            viewModel.onAction(HomeScreenAction.OnDeleteTask(task))
+                        },
+                        onToggleCompletion = {
+                            viewModel.onAction(HomeScreenAction.OnToggleTask(it))
+                        }
                     )
                 }
 
-                stickyHeader{
-                    SectionTitle(
-                        modifier = Modifier.background(
-                            color = MaterialTheme.colorScheme.surface
-                        ).fillParentMaxWidth(),
-                        title = stringResource(R.string.pending_tasks)
-                    )
-                }
 
-                items(
-                    items = state.pendingTask,
-                    key = { task -> task.id }
-                ){ task ->
-                    TaskItem(
-                        modifier = Modifier
-                            .clip(
-                                RoundedCornerShape(8.dp)
-                            )
-                            .animateItem(),
-                        task = task,
-                        onClickItem = { },
-                        onDeleteItem = { },
-                        onToggleCompletion = { }
-                    )
-                }
             }
         },
         floatingActionButton = {
@@ -185,12 +200,6 @@ fun HomeScreenPreviewLight(
 ) {
     TodoAppTheme {
         HomeScreen(
-            state = HomeDataState(
-                date = state.date,
-                summary = state.summary,
-                completedTask = state.completedTask,
-                pendingTask =  state.pendingTask
-            )
         )
     }
 }
@@ -205,12 +214,6 @@ fun HomeScreenPreviewDark(
 ) {
     TodoAppTheme {
         HomeScreen(
-            state = HomeDataState(
-                date = state.date,
-                summary = state.summary,
-                completedTask = state.completedTask,
-                pendingTask =  state.pendingTask
-            )
         )
     }
 }

@@ -17,12 +17,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             TodoAppTheme() {
                 HomeScreen(
-                    state = HomeDataState(
-                        date = "March 9, 2024",
-                        summary = "5 incomplete, 5 completed",
-                        completedTask = completedTask,
-                        pendingTask = pendingTask
-                    )
                 )
             }
         }
