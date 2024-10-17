@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.juandgaines.todoapp.data.FakeTaskLocalDataSource
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnAddTask
+import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteAllTasks
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteTask
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnToggleTask
 import kotlinx.coroutines.flow.launchIn
@@ -48,6 +49,10 @@ class HomeScreenViewModel:ViewModel() {
                 is OnToggleTask -> {
                     val updatedTask = action.task.copy(isCompleted = !action.task.isCompleted)
                     taskLocalDataSource.updateTask(updatedTask)
+                }
+
+                OnDeleteAllTasks -> {
+                    taskLocalDataSource.removeAllTasks()
                 }
             }
         }

@@ -44,16 +44,27 @@ import com.juandgaines.todoapp.presentation.screens.home.components.TaskItem
 import com.juandgaines.todoapp.presentation.screens.home.providers.HomeScreenPreviewProvider
 import com.juandgaines.todoapp.ui.theme.TodoAppTheme
 
+
+@Composable
+fun HomeScreenRoot(){
+    val viewModel:HomeScreenViewModel = viewModel<HomeScreenViewModel>()
+    val state = viewModel.state
+
+    HomeScreen(
+        state = state,
+        onAction = viewModel::onAction
+    )
+}
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    //state: HomeDataState
+    state: HomeDataState,
+    onAction: (HomeScreenAction) -> Unit
 ) {
     var isMenuExtended by remember { mutableStateOf(false) }
 
-    val viewModel:HomeScreenViewModel = viewModel<HomeScreenViewModel>()
-    val state = viewModel.state
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = {
@@ -90,7 +101,9 @@ fun HomeScreen(
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 },
-                                onClick = {}
+                                onClick = {
+                                    onAction(HomeScreenAction.OnDeleteAllTasks)
+                                }
                             )
                         }
                     }
@@ -138,10 +151,10 @@ fun HomeScreen(
                         task = task,
                         onClickItem = { },
                         onDeleteItem = {
-                            viewModel.onAction(HomeScreenAction.OnDeleteTask(task))
+                            onAction(HomeScreenAction.OnDeleteTask(task))
                         },
                         onToggleCompletion = {
-                            viewModel.onAction(HomeScreenAction.OnToggleTask(it))
+                            onAction(HomeScreenAction.OnToggleTask(it))
                         }
                     )
                 }
@@ -172,10 +185,10 @@ fun HomeScreen(
 
                         },
                         onDeleteItem = {
-                            viewModel.onAction(HomeScreenAction.OnDeleteTask(task))
+                            onAction(HomeScreenAction.OnDeleteTask(task))
                         },
                         onToggleCompletion = {
-                            viewModel.onAction(HomeScreenAction.OnToggleTask(it))
+                            onAction(HomeScreenAction.OnToggleTask(it))
                         }
                     )
                 }
@@ -200,6 +213,8 @@ fun HomeScreenPreviewLight(
 ) {
     TodoAppTheme {
         HomeScreen(
+            state = state,
+            onAction = {}
         )
     }
 }
@@ -214,6 +229,8 @@ fun HomeScreenPreviewDark(
 ) {
     TodoAppTheme {
         HomeScreen(
+            state= state,
+            onAction = {}
         )
     }
 }
