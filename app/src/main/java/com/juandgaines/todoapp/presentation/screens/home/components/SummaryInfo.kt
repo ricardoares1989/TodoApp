@@ -39,6 +39,9 @@ fun SummaryInfo(
 
     LaunchedEffect (completedTasks,totalTask){
         if (totalTask == 0) {
+            angleRatio.animateTo(
+                targetValue = 0f
+            )
             return@LaunchedEffect
         }
          angleRatio.animateTo(
