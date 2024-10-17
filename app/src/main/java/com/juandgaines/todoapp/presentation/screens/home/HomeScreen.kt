@@ -37,7 +37,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.juandgaines.todoapp.R
-import com.juandgaines.todoapp.domain.Task
 import com.juandgaines.todoapp.presentation.screens.home.components.SectionTitle
 import com.juandgaines.todoapp.presentation.screens.home.components.SummaryInfo
 import com.juandgaines.todoapp.presentation.screens.home.components.TaskItem
@@ -138,7 +137,7 @@ fun HomeScreen(
                         task = task,
                         onClickItem = { },
                         onDeleteItem = { },
-                        onToggleCompletion = { }
+                        onToggleCompletion = {}
                     )
                 }
 
@@ -215,13 +214,3 @@ fun HomeScreenPreviewDark(
         )
     }
 }
-
-
-
-
-data class HomeDataState(
-    val date:String,
-    val summary:String,
-    val completedTask:List<Task>,
-    val pendingTask:List<Task>,
-)
