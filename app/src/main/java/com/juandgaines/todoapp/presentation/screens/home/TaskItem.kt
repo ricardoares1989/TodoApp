@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.style.TextOverflow.Companion
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.juandgaines.todoapp.domain.Category.WORK
 import com.juandgaines.todoapp.domain.Task
 import com.juandgaines.todoapp.ui.theme.TodoAppTheme
 
@@ -100,7 +101,7 @@ fun TaskItemPreviewLight() {
                 title = "Task 1",
                 description = "Description of task 1",
                 isCompleted = false,
-                category = 1
+                category = WORK
             ),
             onClickItem = {},
             onDeleteItem = {},
@@ -122,7 +123,7 @@ fun TaskItemPreviewDark() {
                 title = "Task 1",
                 description = "Description of task 1",
                 isCompleted = false,
-                category = 1
+                category = WORK
             ),
             onClickItem = {},
             onDeleteItem = {},
