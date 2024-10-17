@@ -3,10 +3,14 @@ package com.juandgaines.todoapp.presentation.screens.home
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Checkbox
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +42,9 @@ fun TaskItem(
             }
             .background(
                 color = MaterialTheme.colorScheme.surfaceContainer,
-            ),
+            )
+            .padding(horizontal = 8.dp)
+        ,
         verticalAlignment = Alignment.CenterVertically
     ){
         Checkbox(
@@ -88,6 +94,19 @@ fun TaskItem(
                     )
                 }
             }
+        }
+
+        Box {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = "Delete Task",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable {
+                        onDeleteItem(task.id)
+                    }
+            )
         }
     }
 }
