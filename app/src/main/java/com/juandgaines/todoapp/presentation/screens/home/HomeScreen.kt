@@ -25,6 +25,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -47,7 +51,7 @@ fun HomeScreen(
     state: HomeDataState
 ) {
 
-    var isMenuExtended: Boolean = false
+    var isMenuExtended by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -62,20 +66,19 @@ fun HomeScreen(
                 },
                 actions = {
                     Box (
-                        modifier= Modifier.padding(8.dp)
+                        modifier= Modifier.padding(8.dp).clickable {
+                            isMenuExtended = true
+                        }
                     ){
                         Icon(
                             imageVector = Icons.Default.MoreVert,
                             contentDescription = "Add Task",
                             tint = MaterialTheme.colorScheme.onSurface,
-                            modifier = Modifier.clickable {
-                                 isMenuExtended = true
-                            }
                         )
                         DropdownMenu(
                             expanded = isMenuExtended,
                             modifier = Modifier.background(
-                                color = MaterialTheme.colorScheme.surface
+                                color = MaterialTheme.colorScheme.surfaceContainerHighest
                             ),
                             onDismissRequest = { isMenuExtended = false }
                         ) {
@@ -86,6 +89,7 @@ fun HomeScreen(
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                 },
+
                                 onClick = {}
                             )
                         }
