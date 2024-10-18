@@ -16,9 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
@@ -211,28 +211,21 @@ fun TaskScreen(
             }
 
             BasicTextField(
-                value = state.taskName,
+                state = state.taskName,
                 textStyle = MaterialTheme.typography.headlineLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 ),
-                maxLines = 1,
-                onValueChange = {
-                    onAction(
-                        ActionTask.ChangeTaskName(
-                            taskName = it
-                        )
-                    )
-                },
+                lineLimits = TextFieldLineLimits.SingleLine,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
                 ,
-                decorationBox = { innerBox ->
+                decorator = { innerTextField ->
                     Column (
                         modifier = Modifier.fillMaxWidth(),
                     ){
-                        if(state.taskName.isEmpty()){
+                        if(state.taskName.text.toString().isEmpty()){
                             Text(
                                 modifier = Modifier.fillMaxWidth(),
                                 text = stringResource(R.string.task_name),
@@ -245,33 +238,25 @@ fun TaskScreen(
                             )
                         }
                         else{
-                            innerBox()
+                            innerTextField()
                         }
                     }
                 }
             )
             BasicTextField(
-                value = state.taskDescription ?: "",
+                state = state.taskDescription,
                 textStyle = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface
                 ),
-                maxLines = 15,
-                onValueChange = {
-                    onAction(
-                        ActionTask.ChangeTaskDescription(
-                            taskDescription = it
-                        )
-                    )
-                },
                 modifier = Modifier
                     .fillMaxWidth()
+                    .wrapContentHeight()
                     .onFocusChanged {
                         isDescriptionFocus = it.isFocused
-                    }
-                ,
-                decorationBox = { innerBox ->
+                    },
+                decorator = { innerTextField ->
                     Column {
-                        if(state.taskDescription.isNullOrEmpty() && !isDescriptionFocus){
+                        if(state.taskDescription.text.toString().isEmpty() && !isDescriptionFocus){
                             Text(
                                 text = stringResource(R.string.task_description),
                                 color = MaterialTheme.colorScheme.onSurface.copy(
@@ -279,10 +264,10 @@ fun TaskScreen(
                                 )
                             )
                         }else{
-                            innerBox()
+                            innerTextField()
                         }
                     }
-                }
+                },
             )
             Spacer(
                 modifier = Modifier.weight(1f)
