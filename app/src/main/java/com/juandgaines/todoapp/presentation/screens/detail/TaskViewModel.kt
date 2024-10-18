@@ -29,16 +29,19 @@ class TaskViewModel (
         private set
 
     private var eventChannel = Channel<TaskEvent>()
+
     val event = eventChannel.receiveAsFlow()
     private val canSaveTask = snapshotFlow { state.taskName.text.toString() }
-
     private val taskData= savedStateHandle.toRoute<TaskScreenDes>()
+
+    private var editedTask: Task? = null
 
     init {
 
         taskData.taskId?.let {
             viewModelScope.launch {
                 fakeTaskLocalDataSource.getTaskById(taskData.taskId)?.let { task ->
+                    editedTask= task
                     state = state.copy(
                         taskName = TextFieldState(task.title),
                         taskDescription = TextFieldState(task.description?:""),
@@ -65,17 +68,29 @@ class TaskViewModel (
                     state = state.copy(isTaskDone = action.isTaskDone)
                 }
                 is ActionTask.SaveTask -> {
-                    val task= Task(
-                        id = UUID.randomUUID().toString(),
-                        title = state.taskName.text.toString(),
-                        description = state.taskDescription.text.toString(),
-                        isCompleted = state.isTaskDone,
-                        category = state.category
-                    )
-                    fakeTaskLocalDataSource.addTask(
-                        task = task
-                    )
 
+                    editedTask?.let {
+                        fakeTaskLocalDataSource.updateTask(
+                             updatedTask= it.copy(
+                                 id = it.id,
+                                title = state.taskName.text.toString(),
+                                description = state.taskDescription.text.toString(),
+                                isCompleted = state.isTaskDone,
+                                category = state.category
+                            )
+                        )
+                    }?:run {
+                        val task= Task(
+                            id =UUID.randomUUID().toString(),
+                            title = state.taskName.text.toString(),
+                            description = state.taskDescription.text.toString(),
+                            isCompleted = state.isTaskDone,
+                            category = state.category
+                        )
+                        fakeTaskLocalDataSource.addTask(
+                            task = task
+                        )
+                    }
                     eventChannel.send(TaskEvent.TaskCreated)
                 }
                 else -> Unit
