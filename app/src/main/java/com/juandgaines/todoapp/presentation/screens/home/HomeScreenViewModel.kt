@@ -43,7 +43,8 @@ class HomeScreenViewModel:ViewModel() {
                     task.date
                 }
             val pendingTasks = tasks
-                .filter { task -> !task.isCompleted
+                .filter { task ->
+                    !task.isCompleted
                 }.sortedByDescending { task ->
                     task.date
                 }
