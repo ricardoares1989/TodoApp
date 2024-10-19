@@ -300,9 +300,8 @@ fun TaskScreen(
             ){
                 Text(
                     text = stringResource(R.string.save),
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = MaterialTheme.colorScheme.onPrimary
-                    )
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.inverseSurface
                 )
             }
         }
