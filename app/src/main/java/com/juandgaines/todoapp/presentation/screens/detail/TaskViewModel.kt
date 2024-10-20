@@ -7,8 +7,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.navigation.toRoute
+import com.juandgaines.todoapp.TodoApplication
 import com.juandgaines.todoapp.domain.Task
 import com.juandgaines.todoapp.domain.TaskLocalDataSource
 import com.juandgaines.todoapp.presentation.navigation.TaskScreenDes
@@ -94,6 +99,24 @@ class TaskViewModel (
                     eventChannel.send(TaskEvent.TaskCreated)
                 }
                 else -> Unit
+            }
+        }
+    }
+
+    companion object{
+        val Factory : ViewModelProvider.Factory = object : ViewModelProvider.Factory  {
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
+                    val application = checkNotNull(extras[APPLICATION_KEY])
+                    val savedStateHandle = extras.createSavedStateHandle()
+                    val dataSource = (application as TodoApplication).dataSource
+                    return TaskViewModel(savedStateHandle,dataSource) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
     }

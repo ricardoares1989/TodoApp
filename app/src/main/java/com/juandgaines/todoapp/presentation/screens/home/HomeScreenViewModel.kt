@@ -5,11 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.toRoute
-import com.juandgaines.todoapp.data.FakeTaskLocalDataSource
+import androidx.lifecycle.viewmodel.CreationExtras
+import com.juandgaines.todoapp.TodoApplication
 import com.juandgaines.todoapp.domain.TaskLocalDataSource
-import com.juandgaines.todoapp.presentation.navigation.TaskScreenDes
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteAllTasks
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteTask
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnToggleTask
@@ -91,4 +93,21 @@ class HomeScreenViewModel(
         }
     }
 
+    companion object{
+        val Factory:ViewModelProvider.Factory = object : ViewModelProvider.Factory{
+            @Suppress("UNCHECKED_CAST")
+            override fun <T : ViewModel> create(
+                modelClass: Class<T>,
+                extras: CreationExtras
+            ): T {
+                if (modelClass.isAssignableFrom(HomeScreenViewModel::class.java)) {
+                    val application = checkNotNull(extras[APPLICATION_KEY])
+                    val savedStateHandle = extras.createSavedStateHandle()
+                    val dataSource = (application as TodoApplication).dataSource
+                    return HomeScreenViewModel(savedStateHandle,dataSource) as T
+                }
+                throw IllegalArgumentException("Unknown ViewModel class")
+            }
+        }
+    }
 }
