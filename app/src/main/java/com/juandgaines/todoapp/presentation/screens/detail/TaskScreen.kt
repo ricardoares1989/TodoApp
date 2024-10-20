@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -137,6 +138,8 @@ fun TaskScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .padding(horizontal = 16.dp)
+                .imePadding()
+
         ){
             Row (
                 verticalAlignment = Alignment.CenterVertically
@@ -268,6 +271,13 @@ fun TaskScreen(
                 textStyle = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface
                 ),
+                lineLimits = if (isDescriptionFocus)
+                    TextFieldLineLimits.MultiLine(
+                        minHeightInLines = 1,
+                        maxHeightInLines = 5
+                    )
+                else
+                    TextFieldLineLimits.Default,
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentHeight()
@@ -289,9 +299,12 @@ fun TaskScreen(
                     }
                 },
             )
+
             Spacer(
                 modifier = Modifier.weight(1f)
             )
+
+
             Button(
                 enabled = state.canSaveTask,
                 onClick = {
