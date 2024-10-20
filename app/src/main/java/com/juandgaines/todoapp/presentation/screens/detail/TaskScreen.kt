@@ -210,6 +210,7 @@ fun TaskScreen(
                                                 8.dp
                                             )
                                             .clickable {
+                                                isExpanded = false
                                                 onAction(
                                                     ActionTask.ChangeTaskCategory(
                                                         category = category

@@ -136,6 +136,7 @@ fun HomeScreen(
                                     )
                                 },
                                 onClick = {
+                                    isMenuExtended = false
                                     onAction(HomeScreenAction.OnDeleteAllTasks)
                                 }
                             )
