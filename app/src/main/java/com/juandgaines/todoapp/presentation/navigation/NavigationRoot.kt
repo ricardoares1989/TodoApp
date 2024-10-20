@@ -27,7 +27,6 @@ fun NavigationRoot (
 ){
 
     val context = LocalContext.current
-    val dataSource = remember { DataSourceFactory.createDataSource(context) }
     val backStackEntry by  navController.currentBackStackEntryAsState()
 
 
@@ -43,7 +42,7 @@ fun NavigationRoot (
 
                     val homeScreenViewModel: HomeScreenViewModel = viewModel(
                         factory = HomeViewModelFactory(
-                            dataSource = dataSource
+                            dataSource = DataSourceFactory.createDataSource(context)
                         )
                     )
                     HomeScreenRoot(
@@ -62,7 +61,7 @@ fun NavigationRoot (
             composable<TaskScreenDes> {
                 val taskViewModel: TaskViewModel = viewModel(
                     factory = TaskViewModelFactory(
-                        dataSource = dataSource
+                        dataSource = DataSourceFactory.createDataSource(context)
                     )
                 )
                 TaskScreenRoot(
