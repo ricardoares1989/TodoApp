@@ -9,8 +9,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.juandgaines.todoapp.data.FakeTaskLocalDataSource
 import com.juandgaines.todoapp.domain.Task
+import com.juandgaines.todoapp.domain.TaskLocalDataSource
 import com.juandgaines.todoapp.presentation.navigation.TaskScreenDes
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
@@ -20,10 +20,10 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 
 class TaskViewModel (
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    private val localDataSource: TaskLocalDataSource
 ): ViewModel() {
 
-    private val fakeTaskLocalDataSource = FakeTaskLocalDataSource
 
     var state by mutableStateOf(TaskScreenState())
         private set
@@ -40,7 +40,7 @@ class TaskViewModel (
 
         taskData.taskId?.let {
             viewModelScope.launch {
-                fakeTaskLocalDataSource.getTaskById(taskData.taskId)?.let { task ->
+                localDataSource.getTaskById(taskData.taskId)?.let { task ->
                     editedTask= task
                     state = state.copy(
                         taskName = TextFieldState(task.title),
@@ -70,7 +70,7 @@ class TaskViewModel (
                 is ActionTask.SaveTask -> {
 
                     editedTask?.let {
-                        fakeTaskLocalDataSource.updateTask(
+                        this@TaskViewModel.localDataSource.updateTask(
                              updatedTask= it.copy(
                                  id = it.id,
                                 title = state.taskName.text.toString(),
@@ -87,7 +87,7 @@ class TaskViewModel (
                             isCompleted = state.isTaskDone,
                             category = state.category
                         )
-                        fakeTaskLocalDataSource.addTask(
+                        localDataSource.addTask(
                             task = task
                         )
                     }

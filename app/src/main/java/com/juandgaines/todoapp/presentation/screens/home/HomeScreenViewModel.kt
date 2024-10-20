@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
 import com.juandgaines.todoapp.data.FakeTaskLocalDataSource
+import com.juandgaines.todoapp.domain.TaskLocalDataSource
 import com.juandgaines.todoapp.presentation.navigation.TaskScreenDes
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteAllTasks
 import com.juandgaines.todoapp.presentation.screens.home.HomeScreenAction.OnDeleteTask
@@ -20,9 +21,10 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-class HomeScreenViewModel():ViewModel() {
-
-    private val taskLocalDataSource = FakeTaskLocalDataSource
+class HomeScreenViewModel(
+    private val savedStateHandle: SavedStateHandle,
+    private val taskLocalDataSource: TaskLocalDataSource
+):ViewModel() {
 
     var state by   mutableStateOf(HomeDataState())
         private set
