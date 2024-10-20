@@ -12,11 +12,14 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.toRoute
 import com.juandgaines.todoapp.TodoApplication
 import com.juandgaines.todoapp.domain.Task
 import com.juandgaines.todoapp.domain.TaskLocalDataSource
 import com.juandgaines.todoapp.presentation.navigation.TaskScreenDes
+import com.juandgaines.todoapp.presentation.screens.home.HomeScreenViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -104,19 +107,14 @@ class TaskViewModel (
     }
 
     companion object{
-        val Factory : ViewModelProvider.Factory = object : ViewModelProvider.Factory  {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ): T {
-                if (modelClass.isAssignableFrom(TaskViewModel::class.java)) {
-                    val application = checkNotNull(extras[APPLICATION_KEY])
-                    val savedStateHandle = extras.createSavedStateHandle()
-                    val dataSource = (application as TodoApplication).dataSource
-                    return TaskViewModel(savedStateHandle,dataSource) as T
-                }
-                throw IllegalArgumentException("Unknown ViewModel class")
+        val Factory: ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                val savedStateHandle = createSavedStateHandle()
+                val dataSource = (this[APPLICATION_KEY] as TodoApplication).dataSource
+                TaskViewModel(
+                    localDataSource = dataSource,
+                    savedStateHandle = savedStateHandle
+                )
             }
         }
     }
