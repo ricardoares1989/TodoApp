@@ -38,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -233,6 +234,7 @@ fun TaskScreen(
                     color = MaterialTheme.colorScheme.onSurface,
                     fontWeight = FontWeight.Bold
                 ),
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
                 lineLimits = TextFieldLineLimits.SingleLine,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -262,6 +264,7 @@ fun TaskScreen(
             )
             BasicTextField(
                 state = state.taskDescription,
+                cursorBrush = SolidColor(MaterialTheme.colorScheme.secondary),
                 textStyle = MaterialTheme.typography.bodyLarge.copy(
                     color = MaterialTheme.colorScheme.onSurface
                 ),
