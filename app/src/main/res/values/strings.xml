@@ -1,3 +1,19 @@
 <resources>
-  <string name="app_name">Todo App</string>
+    <string name="app_name">Todo App</string>
+    <string name="add_task">Add Task</string>
+    <string name="delete_all">Delete All</string>
+    <string name="completed_tasks">Completed Tasks</string>
+    <string name="pending_tasks">Pending Tasks</string>
+    <string name="all_tasks_deleted">Todas las tareas han sido borradas.</string>
+    <string name="task_deleted">Tarea borrada</string>
+    <string name="task_updated">Tarea Actualizada</string>
+    <string name="summary_info">Tienes %s tareas pendientes.</string>
+    <string name="task">Tarea</string>
+    <string name="done">Tarea Completada</string>
+    <string name="category">Categoria</string>
+    <string name="task_name">Nombre de Tarea</string>
+    <string name="task_description">Descripcion de la tareas</string>
+    <string name="save">Guardar</string>
+    <string name="task_created">Tarea Creada</string>
+    <string name="task_edited">Tarea editadata</string>
 </resources>
